@@ -1,0 +1,111 @@
+LAB 6.27.1
+Write a program that reads a list of integers, and outputs whether the list contains all multiples of 10, no multiples of 10, 
+or mixed values. Define a function named is_list_mult10 that takes a list as a parameter, and returns a boolean that represents 
+whether the list contains all multiples of ten. Define a function named is_list_no_mult10 that takes a list as a parameter and returns 
+a boolean that represents whether the list contains no multiples of ten.
+Then, write a main program that takes an integer, representing the size of the list, followed by the list values. The first integer is not in the list.
+The program must define and call the following two functions. is_list_mult10() returns true if all integers in the list are multiples of 10 and 
+false otherwise. is_list_no_mult10() returns true if no integers in the list are multiples of 10 and false otherwise.
+def is_list_mult10(my_list)
+def is_list_no_mult10(my_list)
+
+CODE:
+def is_list_mult10(my_list):
+    for i in my_list:
+        if i % 10 != 0:
+            return False
+    return True
+
+def is_list_no_mult10(my_list):
+    for i in my_list:
+        if i % 10 == 0:
+            return False
+        return True
+        
+def main():
+    num_of_inputs = int(input())
+    num_list = []
+    for i in range(num_of_inputs):
+        num_list.append(int(input()))
+        
+    if is_list_mult10(num_list):
+        print('all multiples of 10')
+    elif is_list_no_mult10(num_list):
+        print('no multiples of 10')
+    else:
+        print('mixed values')
+
+__name__ == '__main__' and main()        
+        
+ LAB 6.29.1
+(1) Prompt the user to enter a string of their choosing. Output the string. (1 pt)
+Ex:
+Enter a sentence or phrase:
+The only thing we have to fear is fear itself.
+You entered: The only thing we have to fear is fear itself.
+(2) Complete the get_num_of_characters() function, which returns the number of characters in the user's string.
+We encourage you to use a for loop in this function. (2 pts)
+(3) Extend the program by calling the get_num_of_characters() function and then output the returned result. (1 pt)
+(4) Extend the program further by implementing the output_without_whitespace() function. output_without_whitespace() 
+outputs the string's characters except for whitespace (spaces, tabs). Note: A tab is '\t'. Call the output_without_whitespace() function in main(). (2 pts)
+
+CODE:
+def get_num_of_characters(userinput):
+    num = 0
+    for i in userinput:
+        num = num + 1
+        
+    return num
+def no_whitespaces(userinput):
+    new = userinput.replace(" ", "")
+    return new
+    
+
+if __name__ == '__main__':
+    userinput = input('Enter a sentence or phrase:\n')
+    print('\nYou entered:', userinput)
+    length = get_num_of_characters(userinput)
+    print('\nNumber of characters:',length)
+    print('String with no whitespace:',no_whitespaces(userinput))
+    
+LAB 7.9.1
+A palindrome is a word or a phrase that is the same when read both forward and backward. Examples are: "bob," "sees," or "never odd or even" 
+(ignoring spaces). 
+Write a program whose input is a word or phrase, and that outputs whether the input is a palindrome.
+
+CODE:
+word = str(input())
+no_space_word = word.replace(" ", "")
+new = no_space_word[::-1]
+
+if no_space_word == new:
+    print('{} is a palindrome'.format(word))
+else:
+    print('{} is not a palindrome'.format(word))
+    
+LAB 7.10.1
+An acronym is a word formed from the initial letters of words in a set phrase. Write a program whose input is a phrase and whose output 
+is an acronym of the input. Append a period (.) after each letter in the acronym. If a word begins with a lower case letter, don't include 
+that letter in the acronym. Assume the input has at least one upper case letter.
+
+CODE:
+name = input()
+start = name.split()
+final = ''
+
+for string in start:
+    if string[0].isupper():
+        final += string[0] + '.'
+print(final)
+
+LAB 7.11.1
+Write a program that reads a character, then reads in a list of words. The output of the program is every word in the list 
+that contains the character at least once. Assume at least one word in the list will contain the given character.
+
+CODE:
+user_letter = input(str())
+user_word = input(str())
+new_word = user_word.split()
+for i in new_word:
+    if user_letter in i:
+        print(i)
