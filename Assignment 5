@@ -1,0 +1,64 @@
+LAB 8.20.1
+Write a program that reads a list of words. Then, the program outputs those words and their frequencies (case insensitive).
+
+CODE:
+a = input()
+mylist = a.split()
+for i in range(0, len(mylist)):
+    count = 1
+    for j in range(0, len(mylist)):
+        if i != j:
+            if mylist[i].lower() == mylist[j].lower():
+                count +=1
+    print(mylist[i], count)
+
+LAB 8.21.1
+A contact list is a place where you can store a specific contact with other associated information such as a phone number, email address,
+birthday, etc. Write a program that first takes in word pairs that consist of a name and a phone number (both strings), separated by a comma. 
+That list is followed by a name, and your program should output the phone number associated with that name. Assume the search name is always in the list.
+
+CODE:
+input1 = input().split(sep=" ")
+
+for i in range(len(input1)):
+    input1[i] = input1[i].split(sep=",")
+
+input2 = input()
+
+for x in input1:
+    if x[0] == input2:
+        print(x[1])
+        break
+
+LAB 8.29.1
+Write a program to calculate the total price for car wash services. A base car wash is $10. 
+A dictionary with each additional service and the corresponding cost has been provided. Two additional services can be selected.
+A '-' signifies an additional service was not selected. Output all selected services, according to the input order, along with the corresponding 
+costs and then the total price for all car wash services.
+
+CODE:
+services = { 'Air freshener' : 1 , 'Rain repellent': 2, 'Tire shine' : 2, 'Wax' : 3, 'Vacuum' : 5 }
+base_wash = 10
+total = 0
+
+service_choice1 = input()
+service_choice2 = input()
+p1 = 0
+p2 = 0
+print('ZyCar Wash')
+print('Base car wash -- $'+str(base_wash))
+
+if service_choice1 != '-':
+    p1 = services[service_choice1]
+    print(service_choice1+str(' -- $')+str(p1))
+
+if service_choice2 != '-':
+    p2 = services[service_choice2]
+    print(service_choice2+str(' -- $')+str(p2))
+
+print('----')
+
+total = base_wash + p1 + p2
+
+print('Total price: $'+str(total))
+
