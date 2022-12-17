@@ -1,0 +1,100 @@
+LAB 1.18.1 For each of the following steps, end the program's output with a newline.
+
+
+(1) Write a program that outputs the following. (Submit for 1 point).
+Hello world!
+
+(2) Update to output the following. (Submit again for 1 more point, so 2 points total).
+Hello world!
+How are you? 
+
+(3) Finally, update to output the following. (Submit again for 1 more point, so 3 points total).
+Hello world!
+How are you?
+   (I'm fine).
+ 
+CODE:
+ 
+print('Hello world!')
+print('How are you?')
+print ("   (I'm fine).")
+
+LAB 1.20.1
+A variable like user_num can store a value like an integer. Extend the given program as indicated.
+Output the user's input. (2 pts)
+Output the input squared and cubed. Hint: Compute squared as user_num * user_num. (2 pts)
+Get a second user input into user_num2, and output the sum and product. (1 pt)
+
+CODE:
+
+user = int(input('Enter integer:\n'))
+print('You entered:', user)
+print(user ,'squared is', user*user)
+print('And', user, 'cubed is', user*user*user, '!!')
+user2 = int(input('Enter another integer:\n'))
+print(user, '+', user2, 'is', user+user2)
+print(user, '*', user2, 'is', user*user2)
+
+LAB 1.21.1 
+ Output this tree. (Submit for 2 points).
+
+   *
+  ***
+ *****
+*******
+  ***
+
+(2) Below the tree (with two blank lines), output this cat. (Submit for 3 points, so 5 points total).
+
+/\   /\
+  o o
+ =   =
+  ---
+  
+ CODE:
+ print('   *')
+print('  ***')
+print(' *****')
+print('*******')
+print('  ***\n\n')
+print('/\\   /\\')
+print('  o o')
+print(' =   =')
+print('  ---')
+
+LAB 2.12.1
+Write a program that reads integers user_num and div_num as input, and outputs user_num divided by div_num three times using floor divisions.
+
+CODE:
+user_num = int(input())
+div_num = int(input())
+z = user_num//div_num
+y = z//div_num
+x = y//div_num
+print(z, y, x)
+
+LAB 2.14.1
+The following equation estimates the average calories burned for a person when exercising, which is based on a scientific journal article (source):
+
+Calories = ( (Age x 0.2757) + (Weight x 0.03295) + (Heart Rate x 1.0781) — 75.4991 ) x Time / 8.368
+
+Write a program using inputs age (years), weight (pounds), heart rate (beats per minute), and time (minutes), respectively. Output the average calories burned for a person.
+
+Output each floating-point value with two digits after the decimal point, which can be achieved as follows:
+print(f'Calories: {calories:.2f} calories')
+
+CODE:
+age = int(input())
+weight = int(input())
+heart_rate = int(input())
+time = int(input())
+
+
+
+cal = ( (age * 0.2757) + (weight * 0.03295) + (heart_rate * 1.0781) - 75.4991 ) * time/ 8.368
+
+print('Calories: ', end='')
+
+print(f'{cal:.2f}' , end='')
+
+print(' calories')
