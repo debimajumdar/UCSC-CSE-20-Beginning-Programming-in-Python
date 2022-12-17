@@ -1,0 +1,158 @@
+LAB 5.20.1 
+Numerous engineering and scientific applications require finding solutions to a set of equations. 
+Ex: 8x + 7y = 38 and 3x - 5y = -1 have a solution x = 3, y = 2. Given integer coefficients of two linear equations with variables x and y, 
+use brute force to find an integer solution for x and y in the range -10 to 10.
+Use this brute force approach:
+For every value of x from -10 to 10
+For every value of y from -10 to 10
+Check if the current x and y satisfy both equations. If so, output the solution, and finish.
+Ex: If no solution is found, output:
+There is no solution
+Assume the two input equations have no more than one solution.
+
+CODE:
+''' Read in first equation, ax + by = c '''
+a = int(input())
+b = int(input())
+c = int(input())
+
+''' Read in second equation, dx + ey = f '''
+d = int(input())
+e = int(input())
+f = int(input())
+h = 0
+i = 0
+for x in range(-10, 10, 1):
+    for y in range(-10, 10, 1):
+        if a * x + b * y == c and d * x + e * y == f:
+            print(f"x = {x} , y = {y}")
+            h = x
+            i = y
+if (a*h + b*i != c) and (d*h + e*i != f):
+    print('There is no solution')
+    
+LAB 5.23.1
+When analyzing data sets, such as data for human heights or for human weights, a common step is to adjust the data. 
+This adjustment can be done by normalizing to values between 0 and 1, or throwing away outliers.
+For this program, adjust the values by dividing all values by the largest value. The input begins with an integer indicating 
+the number of floating-point values that follow.
+
+CODE:
+number = int(input())
+list_number = []
+for i in range(number):
+    list_number.append(float(input()))
+max_val = max(list_number)
+for i in range(number):
+    new_val = list_number[i] / max_val
+    print(f'{new_val:.2f}')
+    
+LAB 5.25.1
+Program Specifications Write a program that outputs a downwards facing arrow composed of a rectangle and a right triangle.
+Arrow dimensions are defined by user specified arrow base height, arrow base width, and arrow head width.
+Note: this program is designed for incremental development. Complete each step and submit for grading before starting the next step. 
+Only a portion of tests pass after each step but confirm progress.
+Step 1 (3 pts). Input the arrow base height (int) and width (int). Draw a rectangle using asterisks (height x width). 
+Hint: use a nested loop in which the inner loop draws one row of *s, and the outer loop iterates a number of times equal to the height. 
+Submit for grading to confirm two tests pass.
+Step 2 (3 pts). Input the arrow head width and draw a right triangle. Hint: use a nested loop. Submit for grading to confirm four tests pass.
+Step 3 (4 pts). Modify the program to only accept an arrow head width that is larger than the arrow base width.
+Use a loop to continue inputting the arrow head width until the value is larger than the arrow base width. Submit for grading to confirm all tests pass.
+
+CODE:
+arrowh = int(input())
+arroww = int(input())
+arrowh_head = int(input())
+while arrowh > 0:
+    print(arroww * '*')
+    arrowh -= 1
+    while arrowh_head <= arroww:
+        arrowh_head = int(input())
+    if arrowh == 0:
+        for i in range(arrowh_head, 0, -1):
+            print(i* '*')
+            
+LAB 6.23.1
+A common year in the modern Gregorian Calendar consists of 365 days. In reality, Earth takes longer to rotate around the sun. 
+To account for the difference in time, every 4 years, a leap year takes place. A leap year is when a year has 366 days: An extra day, February 29th. 
+The requirements for a given year to be a leap year are:
+1) The year must be divisible by 4
+2) If the year is a century year (1700, 1800, etc.), the year must be evenly divisible by 400; therefore, both 1700 and 1800 are not leap years
+Some example leap years are 1600, 1712, and 2016.
+Write a program that takes in a year and determines the number of days in February for that year.
+Your program must define and call the following function. The function should return the number of days in February for the input year.
+def days_in_feb(user_year)
+
+CODE:
+# Define your function here
+def days_in_feb(user_year):
+   is_leap = 29
+   if (user_year % 4) == 0:
+       if (user_year % 100) == 0:
+           if (user_year % 400) == 0:
+               is_leap = 29
+           else:
+               is_leap = 28
+       else:
+           is_leap = 29
+   else:
+       is_leap = 28
+   return is_leap
+   
+if __name__ == '__main__':
+    year = int(input())
+    num = days_in_feb(year)
+    print(str(year) + f" has {num} days in February.")
+
+LAB 6.24.1
+Write a program that takes in a positive integer as input, and outputs a string of 1's and 0's representing the integer in binary.
+For an integer x, the algorithm is:
+As long as x is greater than 0
+   Output x % 2 (remainder is either 0 or 1)
+   x = x // 2
+Note: The above algorithm outputs the 0's and 1's in reverse order. You will need to write a second function to reverse the string.
+Ex: If the input is:
+6
+the output is:
+110
+The program must define and call the following two functions. Define a function named int_to_reverse_binary() 
+that takes an integer as a parameter and returns a string of 1's and 0's representing the integer in binary (in reverse). 
+Define a function named string_reverse() that takes an input string as a parameter and returns a string representing the input string in reverse.
+def int_to_reverse_binary(integer_value)
+def string_reverse(input_string)
+
+CODE:
+number_in_binary = ''
+def int_to_reverse_binary(input_value):
+    number_in_binary = ''
+    while input_value > 0:
+        number_in_binary = number_in_binary + str(input_value % 2)
+        input_value //= 2
+    return number_in_binary
+def string_reverse(input_string):
+    reverse = ''
+    for i in input_string:
+        reverse = i + reverse
+    return reverse 
+if __name__ == '__main__':
+    reverse_binary_string = int_to_reverse_binary(int(input()))
+    print(string_reverse(reverse_binary_string))
+    
+  
+LAB 6.31.1
+Complete a program that takes a weight in kilograms as input, converts the weight to pounds, and then outputs the weight in pounds. 
+1 kilogram = 2.204 pounds (lbs).
+The program must define the following function:
+def kilo_to_pounds(kilos) - take kilos as a parameter, convert kilos from kilograms to pounds, and return the weight in pounds.
+
+
+CODE:
+def kilo_to_pounds(kilos):
+    # This statement intentionally has an error. 
+    return (kilos * 2.204)
+
+if __name__ == '__main__':
+    kilos = float(input())
+    
+    pounds = kilo_to_pounds(kilos)
+    print(pounds, "lbs")
