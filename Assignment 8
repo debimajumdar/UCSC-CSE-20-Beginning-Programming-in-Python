@@ -1,0 +1,210 @@
+LAB 13.11.1 
+Construct a class “Monster” with the following attributes:
+
+self.name (a string)
+self.type (a string, default is ‘Normal’)
+self.current_hp (int, start out equal to max_hp)
+self.max_hp ( int, is given as input when the class instance is created, default is 20)
+self.attacks (a dictionary of all known attacks)
+self. possible_attacks ( a dictionary of all possible attacks)
+The dictionary of possible_attacks will map the name of an attack ( the key) to how many points of damage the attack does. 
+They must be of the following list:
+
+sneak_attack: 1
+slash: 2
+ice_storm: 3
+fire_storm: 3
+whirlwind: 3
+earthquake: 2
+double_hit: 4
+tornado: 4
+wait: 0
+Every monster will start out with only the “wait” attack within self.attacks.
+
+You will need to construct the method add_attack and remove_attack. Both methods will take in an attack name as a parameter.
+A monster can only have a maximum of four attacks at a time. If you add an attack when the monster already has four, the weakest one 
+should be dropped automatically. If there is a tie for the weakest attack, drop the attack that comes first alphabetically.
+If adding the attack ended successfully, return True. If you try to add an invalid attack return False. If all of a monster’s attacks are removed, 
+“wait” should automatically be added again, so that every monster always has at least 1 attack. If removing an attack ended successfully return True. 
+If you try to remove an invalid attack or an attack that has not been learned return False.
+
+CODE:
+
+class Monster():
+   def __init__(self, monstername, hp=20):
+       self.exp = 0
+       self.name = monstername
+       self.type = "Normal"
+       self.max_hp = hp
+       self.current_hp = self.max_hp
+       self.max_hp = 20
+       self.attacks = {"wait":0}
+       self.possible_attacks = {"sneak_attack":1, "slash":2, "ice_storm":3, "fire_storm":3, 
+                                "whirlwind":3, "earthquake":2, "double_hit":4, "tornado":4, "wait":0}
+       self.attacksort = []
+       self.attackindex = 0
+
+   def add_attack(self, attackname):
+       if attackname in self.possible_attacks.keys():
+            if (len(self.attacks) == 4):
+                weakest_point = min(self.attacks.values()) 
+                updated_attacks = [attack for attack, points in self.attacks.items() if points == weakest_point]
+                firstAttack = min(updated_attacks)
+                del self.attacks[firstAttack]
+            self.attacks[attackname] = self.possible_attacks[attackname]
+            return True
+       else:
+           return False
+
+   def remove_attack(self, attackname):
+       if attackname not in self.possible_attacks.keys() or attackname not in self.attacks.keys():
+            return False
+       else:
+           del self.attacks[attackname]
+           if (len(self.attacks) == 0):
+               self.attacks["wait"] = 0 
+           return True
+
+LAB 13.12.1
+
+Now we want a way to make our monsters fight!
+
+Before two monsters can fight, we need to give 2 new class methods that update their stats. Implement a method for “win_fight” and 
+“lose_fight”. Win_fight should add 5 to the monster’s self.exp and reset their hp to max_hp. “lose_fight” should also reset their hp but
+only adds 1 exp to self.exp.
+
+Now write a function that takes 2 instances of the monster class and makes them fight. This function should be defined outside the Monster class,
+i.e. it is not a Monster method. A fight goes as follows:
+
+The monster that entered as the first function goes first.
+Each monster takes a turn using one attack move. The monster selects this attack move from the strongest to the weakest in a circular function.
+For example:
+
+A monster has a dictionary of possible attack as follows:
+
+[“fire_storm”: 3, “double_hit”: 4, “earthquake”: 2, “ice_storm”: 3]
+
+Monster will select the following attacks:
+1	double_hit	Highest hit points
+2	fire_storm	Same hit points as ice_storm but comes first alphabetically
+3	ice_storm	
+4	earthquake	
+5	double_hit	
+6	fire_storm	
+7	ice_storm	
+…. And so on.
+
+An attack is always successful and will decrease the opponent’s hp by the given number of points in self.attacks dictionary.
+The monsters continue taking turns until their current hp becomes less than or equal to zero.
+At this point, the win_fight and lose_fight method should be invoked. Once this complete, return 3 things from the function.
+Round_number
+Monster that won (return the corresponding Monster object)
+List of attacks the monster used
+Special Edge Case: If both monster only have “wait” as an attack, return
+
+-1 (round_number)
+None (for monster name that won)
+None (for list of attack that monster use)
+
+CODE:
+
+class Monster():
+    def __init__(self, monstername, hp=20):
+        self.exp = 0
+        self.name = monstername
+        self.type = "Normal"
+        self.max_hp = hp
+        self.current_hp = self.max_hp
+        self.attacks = {"wait":0}
+        self.possible_attacks = {"sneak_attack":1, "slash":2, "ice_storm":3, "fire_storm":3,
+                                "whirlwind":3, "earthquake":2, "double_hit":4, "tornado":4, "wait":0}
+        self.attacksort = []
+        self.attackindex = 0
+                               
+    def add_attack(self, attackname):
+         if attackname in self.possible_attacks.keys():
+            if (len(self.attacks) == 4):
+                weakest_point = min(self.attacks.values()) 
+                updated_attacks = [attack for attack, points in self.attacks.items() if points == weakest_point]
+                firstAttack = min(updated_attacks)
+                del self.attacks[firstAttack]
+            self.attacks[attackname] = self.possible_attacks[attackname]
+            return True
+         else:
+             return False
+    def remove_attack(self, attackname):
+        if attackname not in self.possible_attacks.keys() or attackname not in self.attacks.keys():
+            return False
+        else:
+            del self.attacks[attackname]
+            if (len(self.attacks) == 0):
+               self.attacks["wait"] = 0 
+            return True
+
+           
+    def win_fight(self):
+        self.exp += 5
+        self.current_hp = self.max_hp
+       
+    def lose_fight(self):
+        self.exp += 1
+        self.current_hp = self.max_hp
+
+    def points(self, attackname):
+        return self.attacks[attackname]
+   
+    def user(self):
+        if len(self.attacksort) == 0:
+            score = list(self.attacks.values())
+            score_list = sorted(set(score), reverse=True)
+            for points in score_list:
+                list1 = [i for i, values in self.attacks.items() if values == points]
+                list1.sort()
+                self.attacksort += list1
+        self.attackindex = 0
+   
+    def userr(self):
+        new_attack = self.attacksort[self.attackindex]
+        if self.attackindex >= (len(self.attacksort) - 1):
+            self.attackindex = 0
+        else:
+            self.attackindex += 1
+        return new_attack
+                   
+
+def monster_fight(monster1, monster2):
+    rounds = 0
+    gameplayer1 = []
+    gameplayer2 = []
+    winner = "None"
+    monster1.user()
+    monster2.user()
+   
+    if monster1.attacksort[0] == "wait" and monster2.attacksort[0] == "wait":
+        return -1, None, None
+   
+    while True:
+       
+        attacks_on_monster1 = monster1.userr()
+        attacks_on_monster2 = monster2.userr()
+        rounds += 1
+        monster2.current_hp -= monster1.attacks[attacks_on_monster1]
+        gameplayer1.append(attacks_on_monster1)
+       
+        if monster2.current_hp <= 0:
+            winner = monster1
+            monster1.win_fight()
+            monster2.lose_fight()
+            return rounds, winner, gameplayer1
+       
+        else:
+            monster1.current_hp -= monster2.attacks[attacks_on_monster2]
+            gameplayer2.append(attacks_on_monster2)
+           
+            if monster1.current_hp <= 0:  
+                winner = monster2
+                monster1.lose_fight()
+                monster2.win_fight()
+                return rounds, winner, gameplayer2
+#helpcitedfrom
+#yashspseudocode
